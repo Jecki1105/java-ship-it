@@ -57,8 +57,9 @@ public class DeliveryApp {
 
     private static void addParcel() {
         System.out.println("Какой тип посылки готовится на отправку?");
-        System.out.println("Введите один из трех вариантов: Стандарт, Хрупкое или Скоропортящиеся");
-        String parcelType = scanner.nextLine();
+        System.out.println("Введите один из трех вариантов: 1 - Стандарт, 2 - Хрупкое, 3 - Скоропортящиеся");
+        int parcelType = scanner.nextInt();
+        scanner.nextLine();
 
         System.out.println("Введите описание посылки: ");
         String description = scanner.nextLine();
@@ -74,27 +75,26 @@ public class DeliveryApp {
 
         Parcel parcel;
 
-        if (parcelType.equals("Стандарт")) {
-            parcel = new StandardParcel(description, weight, deliveryAddress, sendDay);
-            standardParcelInBox.addParcel((StandardParcel) parcel);
-
-        } else if (parcelType.equals("Хрупкое")) {
-
-            parcel = new FragileParcel(description, weight, deliveryAddress, sendDay);
-            trackableParcels.add((Trackable) parcel);
-            fragileParcelInBox.addParcel((FragileParcel) parcel);
-
-        } else if (parcelType.equals("Скоропортящиеся")) {
-
-            System.out.println("Введите срок годности посылки: ");
-            int timeToLive = scanner.nextInt();
-            scanner.nextLine();
-            parcel = new PerishableParcel(description, weight, deliveryAddress, sendDay, timeToLive);
-            perishableParcelInBox.addParcel((PerishableParcel) parcel);
-
-        } else {
-            System.out.println("Неверный тип посылки.");
-            return;
+        switch (parcelType) {
+            case 1:
+                parcel = new StandardParcel(description, weight, deliveryAddress, sendDay);
+                standardParcelInBox.addParcel((StandardParcel) parcel);
+                break;
+            case 2:
+                parcel = new FragileParcel(description, weight, deliveryAddress, sendDay);
+                trackableParcels.add((Trackable) parcel);
+                fragileParcelInBox.addParcel((FragileParcel) parcel);
+                break;
+            case 3:
+                System.out.println("Введите срок годности посылки: ");
+                int timeToLive = scanner.nextInt();
+                scanner.nextLine();
+                parcel = new PerishableParcel(description, weight, deliveryAddress, sendDay, timeToLive);
+                perishableParcelInBox.addParcel((PerishableParcel) parcel);
+                break;
+            default:
+                System.out.println("Неверный тип посылки.");
+                return;
         }
         allParcels.add(parcel);
     }
@@ -127,17 +127,21 @@ public class DeliveryApp {
                 "3 - Скоропортящиеся ");
         int box = scanner.nextInt();
         scanner.nextLine();
-        if (box == 1) {
-            standardParcelInBox.getAllParcels();
-        } else if (box == 2) {
-            fragileParcelInBox.getAllParcels();
-        } else if (box == 3) {
-            perishableParcelInBox.getAllParcels();
-        } else {
-            System.out.println("Введена неверная цифра");
+
+        switch (box) {
+            case 1:
+                standardParcelInBox.getAllParcels();
+                break;
+            case 2:
+                fragileParcelInBox.getAllParcels();
+                break;
+            case 3:
+                perishableParcelInBox.getAllParcels();
+                break;
+            default:
+                System.out.println("Введена неверная цифра");
+                break;
         }
     }
-
-
 }
 

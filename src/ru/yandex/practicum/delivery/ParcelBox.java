@@ -1,10 +1,11 @@
 package ru.yandex.practicum.delivery;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class ParcelBox<T extends Parcel> {
 
-    private ArrayList<T> parcelInBox = new ArrayList<>();
+    private List<T> parcelInBox = new ArrayList<>();
     private int maxWeight;
     private int currentWeight = 0;
 
@@ -29,11 +30,15 @@ public class ParcelBox<T extends Parcel> {
         }
     }
 
-    public ArrayList<T> getParcelInBox() {
+    public List<T> getParcelInBox() {
         return parcelInBox;
     }
 
     public int getCurrentWeight() {
         return currentWeight;
+    }
+
+    public int getMaxWeight() {
+        return maxWeight;
     }
 }
